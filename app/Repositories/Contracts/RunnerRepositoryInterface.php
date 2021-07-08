@@ -4,5 +4,7 @@ namespace App\Repositories\Contracts;
 
 interface RunnerRepositoryInterface
 {
-    public function all();
+    public function getAll();
+
+    public function create();
 }

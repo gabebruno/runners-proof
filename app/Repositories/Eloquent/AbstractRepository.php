@@ -16,7 +16,7 @@ class AbstractRepository
         return app($this->model);
     }
 
-    public function all()
+    public function getAll()
     {
         return $this->model->all();
     }

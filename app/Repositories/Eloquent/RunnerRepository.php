@@ -9,5 +9,7 @@ class RunnerRepository extends AbstractRepository implements RunnerRepositoryInt
 {
     protected $model = Runner::class;
 
-
+    public function create()
+    {
+    }
 }

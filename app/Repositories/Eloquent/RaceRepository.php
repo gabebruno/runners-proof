@@ -8,7 +8,14 @@ use App\Repositories\Contracts\RaceRepositoryInterface;
 
 class RaceRepository extends AbstractRepository implements RaceRepositoryInterface
 {
+
     protected $model = Race::class;
 
+    public function create()
+    {
+    }
 
+    public function subscribeRunnerInRace()
+    {
+    }
 }

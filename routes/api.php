@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RaceController;
+use App\Http\Controllers\RunnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('race', [RaceController::class, 'store'])->name('race.store');
+Route::get('race', [RaceController::class, 'index'])->name('race.index');
+
+Route::post('subscribe', [RaceController::class, 'subscribe'])->name('race.subscribe');
+
+Route::post('runner', [RunnerController::class, 'store'])->name('runner.store');
+Route::get('runner', [RunnerController::class, 'index'])->name('runner.index');

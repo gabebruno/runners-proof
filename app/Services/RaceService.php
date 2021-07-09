@@ -2,15 +2,31 @@
 
 namespace App\Services;
 
+use App\Http\Requests\StoreRaceRequest;
+use App\Http\Requests\SubscribeRunnerRequest;
 use App\Repositories\Contracts\RaceRepositoryInterface;
-use Illuminate\Support\Facades\Validator;
 
 class RaceService
 {
-    private $raceRepo;
+    private $repo;
 
-    public function __construct(RaceRepositoryInterface $raceRepo)
+    public function __construct(RaceRepositoryInterface $repo)
     {
-        $this->raceRepo = $raceRepo;
+        $this->repo = $repo;
+    }
+
+    public function getAll()
+    {
+        return $this->repo->getAll();
+    }
+
+    public function store(StoreRaceRequest $request)
+    {
+        return $this->repo->store($request->validated());
+    }
+
+    public function subscribe(SubscribeRunnerRequest $request)
+    {
+        return $this->repo->subscribe($request->validated());
     }
 }

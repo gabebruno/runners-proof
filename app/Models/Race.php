@@ -9,6 +9,16 @@ class Race extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'type',
+        'start'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     public function runners()
     {
         return $this->belongsToMany(Runner::class, 'race_runner');

@@ -2,20 +2,30 @@
 
 namespace App\Repositories\Eloquent;
 
-use Models\Race;
+use App\Models\Race;
+use Illuminate\Http\Request;
 use App\Repositories\Contracts\RaceRepositoryInterface;
 
 
-class RaceRepository extends AbstractRepository implements RaceRepositoryInterface
+class RaceRepository extends BaseRepository implements RaceRepositoryInterface
 {
 
     protected $model = Race::class;
 
-    public function create()
+    public function store(array $inputs)
     {
+        $race = new $this->model ([
+            'type' => $inputs['type'],
+            'start' => $inputs['start'],
+        ]);
+        $race->save();
+
+        return $race;
     }
 
-    public function subscribeRunnerInRace()
+    public function subscribe(array $inputs)
     {
+        $race = $this->model->find($inputs['race_id']);
+
     }
 }

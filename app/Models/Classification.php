@@ -18,9 +18,4 @@ class Classification extends Model
     {
         return $this->belongsTo(Race::class);
     }
-
-    public function scopeOrderByAge()
-    {
-        return
-    }
 }

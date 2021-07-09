@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ClassificationService
 {
-    private $classificationRepo;
+    private $repo;
 
-    public function __construct(ClassificationRepositoryInterface $classificationRepo)
+    public function __construct(ClassificationRepositoryInterface $repo)
     {
-        $this->classificationRepo = $classificationRepo;
+        $this->repo = $repo;
     }
 }

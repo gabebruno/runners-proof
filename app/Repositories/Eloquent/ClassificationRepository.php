@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Eloquent;
 
-use Models\Classification;
+use App\Models\Classification;
 use App\Repositories\Contracts\ClassificationRepositoryInterface;
 
-class ClassificationRepository extends AbstractRepository implements ClassificationRepositoryInterface
+class ClassificationRepository extends BaseRepository implements ClassificationRepositoryInterface
 {
     protected $model = Classification::class;
 

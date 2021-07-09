@@ -16,7 +16,7 @@ class CreateRacesTable extends Migration
         Schema::create('races', function (Blueprint $table) {
             $table->id();
             $table->integer('type');
-            $table->datetime('start');
+            $table->timestamp('start');
             $table->timestamps();
         });
     }

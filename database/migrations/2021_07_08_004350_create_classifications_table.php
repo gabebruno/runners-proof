@@ -17,7 +17,8 @@ class CreateClassificationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('runner_id');
             $table->unsignedBigInteger('race_id');
-            $table->int('position');
+            $table->integer('position');
+            $table->integer('runner_age');
             $table->timestamps();
 
             $table->foreign('runner_id')->references('id')->on('runners');

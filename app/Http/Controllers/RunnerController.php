@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\RunnerService;
 use App\Http\Requests\StoreRunnerRequest;
@@ -20,7 +21,7 @@ class RunnerController extends Controller
         return $this->service->getAll();
     }
 
-    public function store(StoreRunnerRequest $request)
+    public function store(StoreRunnerRequest $request): JsonResponse
     {
         return $this->service->store($request);
     }

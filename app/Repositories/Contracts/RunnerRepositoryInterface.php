@@ -6,5 +6,5 @@ interface RunnerRepositoryInterface
 {
     public function getAll();
 
-    public function create();
+    public function store(array $inputs);
 }

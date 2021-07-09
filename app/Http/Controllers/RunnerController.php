@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\RunnerService;
 use Illuminate\Http\Request;
+use App\Services\RunnerService;
+use App\Http\Requests\StoreRunnerRequest;
 
 class RunnerController extends Controller
 {
@@ -14,7 +15,13 @@ class RunnerController extends Controller
         $this->service = $service;
     }
 
-    public function create()
+    public function index()
     {
+        return $this->service->getAll();
+    }
+
+    public function store(StoreRunnerRequest $request)
+    {
+        return $this->service->store($request);
     }
 }

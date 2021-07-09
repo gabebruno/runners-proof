@@ -9,6 +9,12 @@ class Runner extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'cnpj',
+        'birthday'
+    ];
+
     public function races()
     {
         return $this->belongsToMany(Race::class, 'race_runner');

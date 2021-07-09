@@ -2,14 +2,22 @@
 
 namespace App\Repositories\Eloquent;
 
-use Models\Runner;
+use App\Models\Runner;
 use App\Repositories\Contracts\RunnerRepositoryInterface;
 
-class RunnerRepository extends AbstractRepository implements RunnerRepositoryInterface
+class RunnerRepository extends BaseRepository implements RunnerRepositoryInterface
 {
     protected $model = Runner::class;
 
-    public function create()
+    public function store(array $inputs)
     {
+        $runner = new $this->model([
+            'name' => $inputs['name'],
+            'cnpj' => $inputs['cnpj'],
+            'birthday' => $inputs['birthday']
+        ]);
+        $runner->save();
+
+        return $runner;
     }
 }

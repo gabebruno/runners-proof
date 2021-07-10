@@ -4,8 +4,11 @@ namespace App\Services;
 
 use App\Models\Runner;
 use App\Helpers\AgeHelper;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StoreClassificationRequest;
+use App\Http\Resources\ClassificationByAgeResource;
+use App\Http\Resources\GeneralClassificationResource;
 use App\Repositories\Contracts\RunnerRepositoryInterface;
 use App\Repositories\Contracts\ClassificationRepositoryInterface;
 
@@ -44,9 +47,10 @@ class ClassificationService
         $validArray = $request->validated();
 
         foreach ($validArray as $key => $valid) {
-            $runner = $this->findRunner($valid['runner_id']);
 
+            $runner = $this->findRunner($valid['runner_id']);
             $valid['runner_age'] = (new AgeHelper)->calculateAge($runner->birthday);
+
             $classification = $this->repo->store($valid);
             $classifications[] = $classification;
         }
@@ -54,18 +58,25 @@ class ClassificationService
         return response()->json($classifications, 201);
     }
 
-    public function getClassificationByAge()
+    public function getClassification(Request $request)
     {
-    }
+        $byAge = request('byAge');
+        $perPage = request('perPage') ? request('perPage') : 15;
 
-    public function getGeneralClassification()
-    {
+        if ($byAge){
+            $byAgeResource = new ClassificationByAgeResource($request);
+            return $this->repo->getClassificationByAge($byAgeResource, $perPage);
+        }
+
+        $generalResource = new GeneralClassificationResource($request);
+        return $this->repo->getGeneralClassification( $generalResource,$perPage);
+
     }
 
     /**
      * Find a runner
      *
-     * Crossing references to check runner information.
+     * Crossing references to check runner information for store method.
      *
      * @param int $id
      *

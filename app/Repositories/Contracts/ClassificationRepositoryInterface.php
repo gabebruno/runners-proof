@@ -2,6 +2,9 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Http\Resources\ClassificationByAgeResource;
+use App\Http\Resources\GeneralClassificationResource;
+
 interface ClassificationRepositoryInterface
 {
     /**
@@ -43,7 +46,10 @@ interface ClassificationRepositoryInterface
      *
      * @return mixed
      */
-    public function getClassificationByAge();
+    public function getClassificationByAge(
+        ClassificationByAgeResource $byAgeResource,
+        int $perPage
+    );
 
     /**
      * Get general classification by race
@@ -52,5 +58,8 @@ interface ClassificationRepositoryInterface
      *
      * @return mixed
      */
-    public function getGeneralClassification();
+    public function getGeneralClassification(
+        GeneralClassificationResource $generalResource,
+        int $perPage
+    );
 }

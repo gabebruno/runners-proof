@@ -33,12 +33,8 @@ class ClassificationController extends Controller
     }
 
 
-    public function getClassificationByAge()
+    public function getClassification(Request $request)
     {
-    }
-
-
-    public function getGeneralClassification()
-    {
+        return $this->service->getClassification($request);
     }
 }

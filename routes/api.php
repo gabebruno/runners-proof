@@ -22,5 +22,9 @@ Route::post('races/subscribe', [RaceController::class, 'subscribe'])->name('race
 
 Route::post('runners', [RunnerController::class, 'store'])->name('runners.store');
 
-Route::get('classifications', [ClassificationController::class, 'get'])->name('classifications.get');
+//Route::get('classifications', [ClassificationController::class, 'getClassification'])->name('classifications.get');
 Route::post('classifications', [ClassificationController::class, 'store'])->name('classifications.store');
+
+
+Route::get('classifications', [RaceController::class, 'getClassification'])->name('classifications.get');
+

@@ -3,6 +3,8 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Classification;
+use App\Http\Resources\ClassificationByAgeResource;
+use App\Http\Resources\GeneralClassificationResource;
 use App\Repositories\Contracts\ClassificationRepositoryInterface;
 
 class ClassificationRepository extends BaseRepository implements ClassificationRepositoryInterface
@@ -12,12 +14,20 @@ class ClassificationRepository extends BaseRepository implements ClassificationR
      */
     protected $model = Classification::class;
 
-    public function getClassificationByAge()
+    public function getClassificationByAge(
+        ClassificationByAgeResource $byAgeResource,
+        int $perPage
+    )
     {
+        return $this->model->with('runner')->with('race')->get();
     }
 
-    public function getGeneralClassification()
+    public function getGeneralClassification(
+        GeneralClassificationResource $generalResource,
+        int $perPage
+    )
     {
+        return $this->model->with('runner')->with('race')->get();
     }
 
     /**

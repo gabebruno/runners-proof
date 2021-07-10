@@ -48,4 +48,14 @@ class RaceRepository extends BaseRepository implements RaceRepositoryInterface
             response()->json([$e->getMessage()], 401);
         }
     }
+
+    public function getClassificationByAge(int $perPage)
+    {
+        return $this->model->whereHas('runnersClassification')->with('runnersClassification')->get();
+    }
+
+    public function getGeneralClassification(int $perPage)
+    {
+
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Services\RaceService;
 use App\Http\Requests\StoreRaceRequest;
 use App\Http\Requests\SubscribeRunnerRequest;
@@ -37,4 +38,10 @@ class RaceController extends Controller
     {
         return $this->service->subscribe($request);
     }
+
+    public function getClassification()
+    {
+        return $this->service->getClassification();
+    }
+
 }

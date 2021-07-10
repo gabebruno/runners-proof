@@ -37,4 +37,9 @@ class Race extends Model
         return $this->hasMany(Classification::class);
     }
 
+    public function runnersClassification()
+    {
+        return $this->belongsToMany(Runner::class, 'classifications','race_id' );
+    }
+
 }

@@ -9,10 +9,6 @@ class ClassificationRepository extends BaseRepository implements ClassificationR
 {
     protected $model = Classification::class;
 
-    public function store()
-    {
-    }
-
     public function getClassificationByAge()
     {
     }
@@ -21,7 +17,7 @@ class ClassificationRepository extends BaseRepository implements ClassificationR
     {
     }
 
-    public function setResults()
+    public function store(array $inputs)
     {
     }
 }

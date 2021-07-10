@@ -3,29 +3,38 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Race;
-use Illuminate\Http\Request;
 use App\Repositories\Contracts\RaceRepositoryInterface;
-
 
 class RaceRepository extends BaseRepository implements RaceRepositoryInterface
 {
-
     protected $model = Race::class;
 
-    public function store(array $inputs)
+    public function store(array $inputs): array
     {
-        $race = new $this->model ([
-            'type' => $inputs['type'],
-            'start' => $inputs['start'],
-        ]);
-        $race->save();
+        $races = [];
 
-        return $race;
+        foreach($inputs as $input){
+
+            $race = new $this->model ([
+                'type' => $input['type'],
+                'date' => $input['date']
+            ]);
+
+            $race->save();
+            $races[] = $race;
+        }
+        return $races;
     }
 
-    public function subscribe(array $inputs)
+    public function subscribe($race, $runnerId): bool
     {
-        $race = $this->model->find($inputs['race_id']);
+        $race->runners()->attach($runnerId);
 
+        return true;
+    }
+
+    public function find($id)
+    {
+        return $this->model->find($id);
     }
 }

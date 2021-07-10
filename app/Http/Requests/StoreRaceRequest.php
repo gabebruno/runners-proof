@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRaceRequest extends FormRequest
@@ -13,7 +12,7 @@ class StoreRaceRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,26 +22,26 @@ class StoreRaceRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'type' => ['required', 'numeric'],
-            'start' => ['required', 'date'],
+            '*.type' => ['required', 'numeric'],
+            '*.date' => ['required', 'date']
         ];
     }
 
     /**
-     * Prepare the data for validation.
+     * Get the error messages for the defined validation rules.
      *
-     * @return void
+     * @return array
      */
-    protected function prepareForValidation()
+    public function messages(): array
     {
-        $attributes = parent::all();
+        return [
+            '*.*.required' => 'Is missing required fields.',
+            '*.type.numeric' => 'The value is not valid, please check documentation.',
+            '*.date.date' => 'The value is not valid, please check documentation.'
 
-        $attributes['start'] = Carbon::parse($attributes['start']);
-        parent::replace($attributes);
-
-        return parent::all();
+        ];
     }
 }

@@ -6,7 +6,7 @@ interface ClassificationRepositoryInterface
 {
     public function getAll();
 
-    public function store();
+    public function store(array $inputs);
 
     public function getClassificationByAge();
 

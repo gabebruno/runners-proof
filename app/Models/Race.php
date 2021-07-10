@@ -11,7 +11,7 @@ class Race extends Model
 
     protected $fillable = [
         'type',
-        'start'
+        'date'
     ];
 
     protected $hidden = [

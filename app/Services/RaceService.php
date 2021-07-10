@@ -27,6 +27,18 @@ class RaceService
 
     public function subscribe(SubscribeRunnerRequest $request)
     {
-        return $this->repo->subscribe($request->validated());
+        $subscribes = [];
+
+        $validArray = $request->validated();
+
+        foreach ($validArray as $key => $valid) {
+            $race = $this->repo->find($valid['race_id']);
+
+            if (!$race->runners->find($valid['runner_id'])) {
+                $this->repo->subscribe($race, $valid['runner_id']);
+                $subscribes[] = $valid;
+            }
+        }
+        return $subscribes;
     }
 }

@@ -8,12 +8,20 @@ use Carbon\Carbon;
 
 class AgeHelper
 {
-    function calculateAge($dateOfBirth): int
+    /**
+     * @param $dateOfBirth
+     * @return int
+     */
+    public function calculateAge($dateOfBirth): int
     {
         return Carbon::parse($dateOfBirth)->age;
     }
 
-    function inLegalAge($dateOfBirth): bool
+    /**
+     * @param $dateOfBirth
+     * @return bool
+     */
+    public function inLegalAge($dateOfBirth): bool
     {
         $age = $this->calculateAge($dateOfBirth);
         return ($age >= 18);

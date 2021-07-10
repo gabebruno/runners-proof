@@ -46,7 +46,7 @@ class StoreRunnerRequest extends FormRequest
             '*.birthday.date' => 'Value is not valid, please check documentation.',
             '*.name.string' => 'Value is not valid, please check documentation.',
             '*.*.required' => 'Missing required fields.',
-            'InLegalAge' => 'Runner is underage.'
+            '*.*.InLegalAge' => 'Runner is underage.'
         ];
     }
 
@@ -65,16 +65,4 @@ class StoreRunnerRequest extends FormRequest
         parent::replace($runners);
         return parent::all();
     }
-
-    /**
-     * Configure the validator instance.
-     *
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return void
-     */
-    public function withValidator($validator)
-    {
-        dd($validator->errors());
-    }
-
 }

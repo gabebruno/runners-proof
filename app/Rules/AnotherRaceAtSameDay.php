@@ -2,9 +2,9 @@
 
 namespace App\Rules;
 
-use App\Models\Race;
-use App\Models\Runner;
 use Illuminate\Contracts\Validation\Rule;
+use App\Repositories\Eloquent\RaceRepository;
+use App\Repositories\Eloquent\RunnerRepository;
 
 class AnotherRaceAtSameDay implements Rule
 {
@@ -27,11 +27,11 @@ class AnotherRaceAtSameDay implements Rule
      */
     public function passes($attribute, $value)
     {
-        $runner = Runner::find($value);
+        $runner = (new RunnerRepository)->find($value);
 
         $index = explode('.',$attribute)[0];
         $raceId = request()->input("{$index}.race_id");
-        $race = Race::find($raceId);
+        $race = (new RaceRepository)->find($raceId);
 
         return !($runner->races()->where('date', $race->date)->where('race_id', '!=' ,$race->id)->first());
     }

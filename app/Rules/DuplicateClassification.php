@@ -3,9 +3,9 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Repositories\Eloquent\RaceRepository;
+use App\Repositories\Eloquent\ClassificationRepository;
 
-class IsUniqueRunnerInRace implements Rule
+class DuplicateClassification implements Rule
 {
     /**
      * Create a new rule instance.
@@ -20,17 +20,17 @@ class IsUniqueRunnerInRace implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  integer  $raceId
-     * @param  integer  $runnerId
+     * @param  string  $attribute
+     * @param  mixed  $value
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool
     {
         $index = explode('.',$attribute)[0];
         $raceId = request()->input("{$index}.race_id");
-        $race = (new RaceRepository)->find($raceId);
+        $classification = (new ClassificationRepository)->findByRace($raceId);
 
-        return !($race->runners()->where('runner_id', $value)->first());
+        return ($classification->where('runner_id', $value)->count() == 0);
     }
 
     /**
@@ -38,8 +38,8 @@ class IsUniqueRunnerInRace implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
-        return 'Runner is already subscribed in the race.';
+        return 'The classification for this runner it\'s already registered.';
     }
 }

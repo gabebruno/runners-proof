@@ -9,6 +9,9 @@ use App\Http\Requests\StoreRunnerRequest;
 
 class RunnerController extends Controller
 {
+    /**
+     * @var RunnerService
+     */
     private $service;
 
     public function __construct(RunnerService $service)
@@ -16,12 +19,14 @@ class RunnerController extends Controller
         $this->service = $service;
     }
 
-    public function index()
-    {
-        return $this->service->getAll();
-    }
-
-    public function store(StoreRunnerRequest $request): JsonResponse
+    /**
+     * Store a resource on database
+     *
+     * @param StoreRunnerRequest $request
+     *
+     * @return array
+     */
+    public function store(StoreRunnerRequest $request): array
     {
         return $this->service->store($request);
     }

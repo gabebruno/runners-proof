@@ -2,50 +2,77 @@
 
 namespace App\Services;
 
+use App\Models\Runner;
+use App\Helpers\AgeHelper;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\StoreClassificationRequest;
+use App\Repositories\Contracts\RunnerRepositoryInterface;
 use App\Repositories\Contracts\ClassificationRepositoryInterface;
-use Illuminate\Support\Facades\Validator;
 
 class ClassificationService
 {
+    /**
+     * @var ClassificationRepositoryInterface
+     */
     private $repo;
 
-    public function __construct(ClassificationRepositoryInterface $repo)
+    /**
+     * @var RunnerRepositoryInterface
+     */
+    private $runnerRepo;
+
+    public function __construct(
+        ClassificationRepositoryInterface $repo,
+        RunnerRepositoryInterface $runnerRepo
+    )
     {
         $this->repo = $repo;
+        $this->runnerRepo = $runnerRepo;
     }
 
-    public function getAll()
+    /**
+     * Store a resource in database
+     *
+     * @param StoreClassificationRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function store(StoreClassificationRequest $request): JsonResponse
     {
-        return $this->repo->getAll();
-    }
+        $classifications = [];
 
-    public function store()
-    {
-        return $this->repo->store();
+        $validArray = $request->validated();
+
+        foreach ($validArray as $key => $valid) {
+            $runner = $this->findRunner($valid['runner_id']);
+
+            $valid['runner_age'] = (new AgeHelper)->calculateAge($runner->birthday);
+            $classification = $this->repo->store($valid);
+            $classifications[] = $classification;
+        }
+
+        return response()->json($classifications, 201);
     }
 
     public function getClassificationByAge()
     {
-        /* *
-         * A listagem de classificações por idade deve apresentar as posições dos
-         * candidatos dentro dos seguintes grupos em cada tipo de prova:
-         * o 18 – 25 anos
-         * o 25 – 35 anos
-         * o 35 – 45 anos
-         * o 45 – 55 anos
-         * o Acima de 55 anos
-         * Por exemplo, as colocações de 18 -25 na prova de 3km apresentarão os 1º,2º, 3º, ...,
-         * nesta faixa de idade, o mesmo para as outras faixas e tipos de provas.
-         * */
-
-
-
     }
 
     public function getGeneralClassification()
     {
-        /* *
-         * A listagem de classificações gerais deve ser separada por tipos de provas.
-         * */
+    }
+
+    /**
+     * Find a runner
+     *
+     * Crossing references to check runner information.
+     *
+     * @param int $id
+     *
+     * @return Runner
+     */
+    public function findRunner(int $id): Runner
+    {
+        return $this->runnerRepo->find($id);
     }
 }

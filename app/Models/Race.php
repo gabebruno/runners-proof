@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Race extends Model
 {
@@ -19,12 +21,18 @@ class Race extends Model
         'updated_at'
     ];
 
-    public function runners()
+    /**
+     * @return BelongsToMany
+     */
+    public function runners(): BelongsToMany
     {
         return $this->belongsToMany(Runner::class, 'race_runner');
     }
 
-    public function classifications()
+    /**
+     * @return HasMany
+     */
+    public function classifications(): HasMany
     {
         return $this->hasMany(Classification::class);
     }

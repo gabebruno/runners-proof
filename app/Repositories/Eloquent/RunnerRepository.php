@@ -7,9 +7,19 @@ use App\Repositories\Contracts\RunnerRepositoryInterface;
 
 class RunnerRepository extends BaseRepository implements RunnerRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected $model = Runner::class;
 
-    public function store(array $inputs): array
+    /**
+     * Store a resource in database
+     *
+     * @param array $inputs
+     *
+     * @return mixed
+     */
+    public function store(array $inputs)
     {
         $runner = new $this->model([
             'name' => $inputs['name'],

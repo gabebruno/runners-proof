@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Services\RaceService;
 use App\Http\Requests\StoreRaceRequest;
 use App\Http\Requests\SubscribeRunnerRequest;
+use Illuminate\Http\JsonResponse;
 
 class RaceController extends Controller
 {
+    /**
+     * @var RaceService
+     */
     private $service;
 
     public function __construct(RaceService $service)
@@ -15,20 +19,22 @@ class RaceController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    /**
+     * @param StoreRaceRequest $request
+     * @return JsonResponse
+     */
+    public function store(StoreRaceRequest $request): JsonResponse
     {
-        return $this->service->getAll();
+        return $this->service->store($request);
+
     }
 
-    public function store(StoreRaceRequest $request)
+    /**
+     * @param SubscribeRunnerRequest $request
+     * @return JsonResponse
+     */
+    public function subscribe(SubscribeRunnerRequest $request): JsonResponse
     {
-        $race = $this->service->store($request);
-        return response()->json([$race], 201);
-    }
-
-    public function subscribe(SubscribeRunnerRequest $request)
-    {
-        $subscribes = $this->service->subscribe($request);
-        return response()->json([$subscribes], 201);
+        return $this->service->subscribe($request);
     }
 }

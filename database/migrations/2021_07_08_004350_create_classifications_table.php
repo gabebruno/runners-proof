@@ -17,7 +17,8 @@ class CreateClassificationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('runner_id');
             $table->unsignedBigInteger('race_id');
-            $table->integer('position');
+            $table->time('begin');
+            $table->time('finish');
             $table->integer('runner_age');
             $table->timestamps();
 

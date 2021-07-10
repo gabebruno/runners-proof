@@ -10,6 +10,9 @@ use Illuminate\Validation\ValidationException;
 
 class RunnerService
 {
+    /**
+     * @var RunnerRepositoryInterface
+     */
     private $repo;
 
     public function __construct(RunnerRepositoryInterface $repo)
@@ -17,12 +20,12 @@ class RunnerService
         $this->repo = $repo;
     }
 
-    public function getAll()
-    {
-        return $this->repo->getAll();
-    }
-
-    public function store(StoreRunnerRequest $request): JsonResponse
+    /**
+     * @param StoreRunnerRequest $request
+     *
+     * @return array
+     */
+    public function store(StoreRunnerRequest $request): array
     {
         $runners = [];
 
@@ -32,6 +35,6 @@ class RunnerService
             $runners[] = $runner;
         }
 
-        return response()->json([$runners], 201);
+        return $runners;
     }
 }

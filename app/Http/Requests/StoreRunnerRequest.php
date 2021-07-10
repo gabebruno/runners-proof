@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\InLegalAge;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRunnerRequest extends FormRequest
@@ -21,12 +22,31 @@ class StoreRunnerRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
+    {
+        return[
+            '*.name' => ['required', 'string'],
+            '*.cpf' => ['required', 'cpf', 'unique:runners', 'distinct'],
+            '*.birthday' => ['required', 'date'],
+            '*' => new InLegalAge,
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'cnpj' => ['required', 'cnpj', 'unique:runners,cnpj'],
-            'birthday' => ['required', 'date']
+            '*.cpf.unique' => 'CPF is already in our registers.',
+            '*.cpf.cpf' => 'Invalid CPF number.',
+            '*.cpf.distinct' => 'CPF is duplicate in this request.',
+            '*.birthday.date' => 'Value is not valid, please check documentation.',
+            '*.name.string' => 'Value is not valid, please check documentation.',
+            '*.*.required' => 'Missing required fields.',
+            'InLegalAge' => 'Runner is underage.'
         ];
     }
 
@@ -35,13 +55,26 @@ class StoreRunnerRequest extends FormRequest
      *
      * @return array
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): array
     {
-        $attributes = parent::all();
+        $runners = parent::all();
 
-        $attributes['cnpj'] = preg_replace('/\D/', '', $attributes['cnpj']);
-        parent::replace($attributes);
-
+        foreach ($runners as $runner) {
+            $runner['cpf'] = preg_replace('/\D/', '', $runner['cpf']);
+        }
+        parent::replace($runners);
         return parent::all();
     }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        dd($validator->errors());
+    }
+
 }

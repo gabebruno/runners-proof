@@ -11,8 +11,13 @@ class Runner extends Model
 
     protected $fillable = [
         'name',
-        'cnpj',
+        'cpf',
         'birthday'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
     ];
 
     public function races()

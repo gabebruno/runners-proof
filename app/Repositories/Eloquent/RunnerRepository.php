@@ -9,13 +9,14 @@ class RunnerRepository extends BaseRepository implements RunnerRepositoryInterfa
 {
     protected $model = Runner::class;
 
-    public function store(array $inputs)
+    public function store(array $inputs): array
     {
         $runner = new $this->model([
             'name' => $inputs['name'],
-            'cnpj' => $inputs['cnpj'],
+            'cpf' => $inputs['cpf'],
             'birthday' => $inputs['birthday']
         ]);
+
         $runner->save();
 
         return $runner;

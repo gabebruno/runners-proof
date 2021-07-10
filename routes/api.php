@@ -16,10 +16,12 @@ use App\Http\Controllers\RunnerController;
 |
 */
 
-Route::post('race', [RaceController::class, 'store'])->name('race.store');
-Route::get('race', [RaceController::class, 'index'])->name('race.index');
+Route::post('races', [RaceController::class, 'store'])->name('races.store');
+Route::get('races', [RaceController::class, 'index'])->name('races.index');
+Route::post('races/subscribe', [RaceController::class, 'subscribe'])->name('races.subscribe');
 
-Route::post('subscribe', [RaceController::class, 'subscribe'])->name('race.subscribe');
+Route::post('runners', [RunnerController::class, 'store'])->name('runners.store');
+Route::get('runners', [RunnerController::class, 'index'])->name('runners.index');
 
-Route::post('runner', [RunnerController::class, 'store'])->name('runner.store');
-Route::get('runner', [RunnerController::class, 'index'])->name('runner.index');
+Route::get('classifications', [RunnerController::class, 'index'])->name('classifications.index');
+Route::post('classifications', [RunnerController::class, 'store'])->name('classifications.store');

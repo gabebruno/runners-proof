@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\RaceService;
 use App\Http\Requests\StoreRaceRequest;
 use App\Http\Requests\SubscribeRunnerRequest;
@@ -29,7 +28,7 @@ class RaceController extends Controller
 
     public function subscribe(SubscribeRunnerRequest $request)
     {
-        $this->service->subscribe($request);
-        return response()->json(['message' => "Subscribed"], 201);
+        $subscribes = $this->service->subscribe($request);
+        return response()->json([$subscribes], 201);
     }
 }

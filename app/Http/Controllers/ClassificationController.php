@@ -15,7 +15,12 @@ class ClassificationController extends Controller
         $this->service = $service;
     }
 
-    public function setResults()
+    public function index()
+    {
+        return $this->service->getAll();
+    }
+
+    public function store()
     {
     }
 

@@ -2,13 +2,15 @@
 
 namespace App\Repositories\Contracts;
 
-use Illuminate\Http\Request;
+use App\Models\Race;
 
 interface RaceRepositoryInterface
 {
+    public function find($id);
+
     public function getAll();
 
     public function store(array $inputs);
 
-    public function subscribe(array $inputs);
+    public function subscribe(Race $race, int $runnerId);
 }

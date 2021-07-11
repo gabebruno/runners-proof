@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use App\Repositories\Eloquent\RaceRepository;
 
-class IsUniqueRunnerInRace implements Rule
+class AlreadySubscribedInRace implements Rule
 {
     /**
      * Create a new rule instance.
@@ -24,13 +24,20 @@ class IsUniqueRunnerInRace implements Rule
      * @param  integer  $runnerId
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool
     {
         $index = explode('.',$attribute)[0];
         $raceId = request()->input("{$index}.race_id");
-        $race = (new RaceRepository)->find($raceId);
-
-        return !($race->runners()->where('runner_id', $value)->first());
+        if ($race = (new RaceRepository)->find($raceId)) {
+            foreach (request()->all() as $key => $singleRequest) {
+                if ($singleRequest['runner_id'] == $value) {
+                    $requestRace = (new RaceRepository)->find(request()->input($key)['race_id']);
+                    return !($race->date == $requestRace->date);
+                }
+            }
+            return !($race->runners()->where('runner_id', $value)->first());
+        }
+        return true;
     }
 
     /**
@@ -38,7 +45,7 @@ class IsUniqueRunnerInRace implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'Runner is already subscribed in the race.';
     }

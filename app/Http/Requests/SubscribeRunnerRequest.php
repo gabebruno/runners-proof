@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\AnotherRaceAtSameDay;
-use App\Rules\IsUniqueRunnerInRace;
+use App\Rules\AlreadySubscribedInRace;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SubscribeRunnerRequest extends FormRequest
@@ -26,17 +26,17 @@ class SubscribeRunnerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '*.runner_id' => [
-                'required',
-                'exists:runners,id',
-                'numeric',
-                new IsUniqueRunnerInRace,
-                new AnotherRaceAtSameDay
-            ],
             '*.race_id' => [
                 'required',
                 'exists:races,id',
                 'numeric'
+            ],
+            '*.runner_id' => [
+                'exists:runners,id',
+                'required',
+                'numeric',
+                new AlreadySubscribedInRace,
+                new AnotherRaceAtSameDay
             ]
         ];
     }

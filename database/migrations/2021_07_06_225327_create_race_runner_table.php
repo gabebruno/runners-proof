@@ -17,6 +17,11 @@ class CreateRaceRunnerTable extends Migration
             $table->id();
             $table->unsignedBigInteger('runner_id');
             $table->unsignedBigInteger('race_id');
+            $table->string('begin')->nullable();
+            $table->string('finish')->nullable();
+            $table->integer('runner_age')->nullable();
+            $table->string('total_time')->nullable();
+            $table->timestamps();
 
             $table->foreign('runner_id')->references('id')->on('runners');
             $table->foreign('race_id')->references('id')->on('races');

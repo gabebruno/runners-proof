@@ -2,26 +2,23 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Race;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ClassificationByAgeResource extends JsonResource
 {
-    /**
-     * The "data" wrapper that should be applied.
-     *
-     * @var string
-     */
-    public static $wrap = 'classifications';
-
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
-        dd($request);
-        return parent::toArray($request);
+       return [
+         'race_id' => $this['raceId'],
+         'race_type' => $this['raceType'],
+         'age_range' => $this['age_range']
+       ];
     }
 }

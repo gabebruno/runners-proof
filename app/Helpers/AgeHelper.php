@@ -12,7 +12,7 @@ class AgeHelper
      * @param $dateOfBirth
      * @return int
      */
-    public function calculateAge($dateOfBirth): int
+    public static function calculateAge($dateOfBirth): int
     {
         return Carbon::parse($dateOfBirth)->age;
     }
@@ -21,9 +21,9 @@ class AgeHelper
      * @param $dateOfBirth
      * @return bool
      */
-    public function inLegalAge($dateOfBirth): bool
+    public static function inLegalAge($dateOfBirth): bool
     {
-        $age = $this->calculateAge($dateOfBirth);
+        $age = self::calculateAge($dateOfBirth);
         return ($age >= 18);
     }
 }

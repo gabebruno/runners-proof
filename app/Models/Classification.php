@@ -10,12 +10,15 @@ class Classification extends Model
 {
     use HasFactory;
 
+    protected $table = 'race_runner';
+
     protected $fillable = [
         'runner_id',
         'race_id',
         'begin',
         'finish',
-        'runner_age'
+        'runner_age',
+        'total_time'
     ];
 
     protected $hidden = [

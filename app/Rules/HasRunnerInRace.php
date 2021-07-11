@@ -29,8 +29,10 @@ class HasRunnerInRace implements Rule
         $index = explode('.',$attribute)[0];
         $raceId = request()->input("{$index}.race_id");
         $race = (new RaceRepository)->find($raceId);
-
-        return ($race->runners()->where('runner_id', $value)->exists());
+        if ($race && $race->has('runners')) {
+            return ($race->runners()->where('runner_id', $value)->exists());
+        }
+        return true;
     }
 
     /**

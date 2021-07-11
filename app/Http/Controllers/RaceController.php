@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\RaceService;
 use App\Http\Requests\StoreRaceRequest;
 use App\Http\Requests\SubscribeRunnerRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class RaceController extends Controller
 {
@@ -37,11 +37,6 @@ class RaceController extends Controller
     public function subscribe(SubscribeRunnerRequest $request): JsonResponse
     {
         return $this->service->subscribe($request);
-    }
-
-    public function getClassification()
-    {
-        return $this->service->getClassification();
     }
 
 }

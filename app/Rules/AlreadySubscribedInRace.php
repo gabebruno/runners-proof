@@ -29,12 +29,6 @@ class AlreadySubscribedInRace implements Rule
         $index = explode('.',$attribute)[0];
         $raceId = request()->input("{$index}.race_id");
         if ($race = (new RaceRepository)->find($raceId)) {
-            foreach (request()->all() as $key => $singleRequest) {
-                if ($singleRequest['runner_id'] == $value) {
-                    $requestRace = (new RaceRepository)->find(request()->input($key)['race_id']);
-                    return !($race->date == $requestRace->date);
-                }
-            }
             return !($race->runners()->where('runner_id', $value)->first());
         }
         return true;

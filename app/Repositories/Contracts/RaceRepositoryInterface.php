@@ -3,8 +3,6 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Race;
-use App\Http\Resources\ClassificationByAgeResource;
-use App\Http\Resources\GeneralClassificationResource;
 
 interface RaceRepositoryInterface
 {
@@ -46,8 +44,4 @@ interface RaceRepositoryInterface
      * @return mixed
      */
     public function subscribe(Race $race, int $runnerId);
-
-    public function getClassificationByAge(int $perPage);
-
-    public function getGeneralClassification(int $perPage);
 }

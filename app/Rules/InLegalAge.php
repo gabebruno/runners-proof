@@ -3,7 +3,6 @@
 namespace App\Rules;
 
 use App\Helpers\AgeHelper;
-use App\Models\Runner;
 use Illuminate\Contracts\Validation\Rule;
 
 class InLegalAge implements Rule
@@ -26,7 +25,7 @@ class InLegalAge implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return (new AgeHelper)->inLegalAge($value['birthday']);
+        return AgeHelper::inLegalAge($value['birthday']);
     }
 
     /**

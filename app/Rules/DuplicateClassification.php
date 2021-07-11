@@ -30,7 +30,13 @@ class DuplicateClassification implements Rule
         $raceId = request()->input("{$index}.race_id");
         $classification = (new ClassificationRepository)->findByRace($raceId);
 
-        return ($classification->where('runner_id', $value)->count() == 0);
+        return  $classification
+                ->where('runner_id', $value)
+                ->where('race_id', $raceId)
+                ->whereNotNull('begin')
+                ->whereNotNull('finish')
+                ->count() == 0
+        ;
     }
 
     /**

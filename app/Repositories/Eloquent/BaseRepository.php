@@ -21,9 +21,14 @@ class BaseRepository
         return $this->model->all();
     }
 
+    public function getWithOrderBy($order)
+    {
+        return $this->model->orderBy("$order")->get();
+    }
+
     public function find($id)
     {
-        return $this->model->find($id);
+        return $this->model->findOrFail($id);
     }
 
 }

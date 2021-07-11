@@ -27,14 +27,8 @@ class ClassificationController extends Controller
      *
      * @return JsonResponse
      */
-    public function store(StoreClassificationRequest $request): JsonResponse
+    public function registerResults(StoreClassificationRequest $request): JsonResponse
     {
-        return $this->service->store($request);
-    }
-
-
-    public function getClassification(Request $request)
-    {
-        return $this->service->getClassification($request);
+        return $this->service->registerResults($request);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Race;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\Contracts\RaceRepositoryInterface;
 
 class RaceRepository extends BaseRepository implements RaceRepositoryInterface
@@ -19,16 +20,13 @@ class RaceRepository extends BaseRepository implements RaceRepositoryInterface
      *
      * @return array
      */
-    public function store(array $inputs): array
+    public function store(array $inputs): Race
     {
-
         $race = new $this->model ([
             'type' => $inputs['type'],
             'date' => $inputs['date']
         ]);
-
         $race->save();
-
         return $race;
     }
 
@@ -49,13 +47,5 @@ class RaceRepository extends BaseRepository implements RaceRepositoryInterface
         }
     }
 
-    public function getClassificationByAge(int $perPage)
-    {
-        return $this->model->whereHas('runnersClassification')->with('runnersClassification')->get();
-    }
 
-    public function getGeneralClassification(int $perPage)
-    {
-
-    }
 }

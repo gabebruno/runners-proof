@@ -2,11 +2,9 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StoreRaceRequest;
 use App\Http\Requests\SubscribeRunnerRequest;
-use App\Http\Resources\ClassificationByAgeResource;
 use App\Repositories\Contracts\RaceRepositoryInterface;
 
 class RaceService
@@ -60,14 +58,5 @@ class RaceService
             }
         }
         return response()->json([$subscribes], 201);
-    }
-
-    public function getClassification()
-    {
-        $byAge = boolval(request('byAge'));
-        $perPage = request('perPage') ? intval(request('perPage')) : 15;
-
-        $classificationByAge = new ClassificationByAgeResource($this->repo->getClassificationByAge($perPage));
-        return $classificationByAge;
     }
 }

@@ -26,9 +26,7 @@ class RunnerRepository extends BaseRepository implements RunnerRepositoryInterfa
             'cpf' => $inputs['cpf'],
             'birthday' => $inputs['birthday']
         ]);
-
         $runner->save();
-
         return $runner;
     }
 }

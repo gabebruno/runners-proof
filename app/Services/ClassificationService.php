@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Runner;
 use App\Helpers\AgeHelper;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StoreClassificationRequest;
-use App\Http\Resources\ClassificationByAgeResource;
-use App\Http\Resources\GeneralClassificationResource;
 use App\Repositories\Contracts\RunnerRepositoryInterface;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Repositories\Contracts\ClassificationRepositoryInterface;
 
 class ClassificationService
@@ -40,50 +39,53 @@ class ClassificationService
      *
      * @return JsonResponse
      */
-    public function store(StoreClassificationRequest $request): JsonResponse
+    public function registerResults(StoreClassificationRequest $request): JsonResponse
     {
         $classifications = [];
 
         $validArray = $request->validated();
 
-        foreach ($validArray as $key => $valid) {
+        foreach ($validArray as $valid) {
 
-            $runner = $this->findRunner($valid['runner_id']);
-            $valid['runner_age'] = (new AgeHelper)->calculateAge($runner->birthday);
+            $totalTime = $this->calculateTotalTime($valid['begin'], $valid['finish']);
 
-            $classification = $this->repo->store($valid);
-            $classifications[] = $classification;
+            $runner = $this->findRunnerById($valid['runner_id']);
+            $valid['runner_age'] = AgeHelper::calculateAge($runner->birthday);
+            $valid['total_time'] = date("H:i:s", strtotime($totalTime));
+            $valid['begin'] = date("H:i:s", strtotime($valid['begin']));
+            $valid['finish'] = date("H:i:s", strtotime($valid['finish']));
+            $this->repo->registerResults($valid);
         }
 
         return response()->json($classifications, 201);
     }
 
-    public function getClassification(Request $request)
-    {
-        $byAge = request('byAge');
-        $perPage = request('perPage') ? request('perPage') : 15;
-
-        if ($byAge){
-            $byAgeResource = new ClassificationByAgeResource($request);
-            return $this->repo->getClassificationByAge($byAgeResource, $perPage);
-        }
-
-        $generalResource = new GeneralClassificationResource($request);
-        return $this->repo->getGeneralClassification( $generalResource,$perPage);
-
-    }
-
     /**
      * Find a runner
      *
-     * Crossing references to check runner information for store method.
+     * Crossing references to check runner information for registerResults method.
      *
      * @param int $id
      *
      * @return Runner
      */
-    public function findRunner(int $id): Runner
+    public function findRunnerById(int $id): Runner
     {
         return $this->runnerRepo->find($id);
+    }
+
+    private function calculateTotalTime($begin, $finish): string
+    {
+        return Carbon::parse($begin)
+            ->diff(Carbon::parse($finish))
+            ->format('%H:%I:%S');
+    }
+
+    public function getClassifications(): AnonymousResourceCollection
+    {
+        $byAge = strtolower(request('byAge')) == 'true';
+        $perPage = request('perPage') ? intval(request('perPage')) : 15;
+
+        return $this->repo->getClassifications($perPage, $byAge);
     }
 }

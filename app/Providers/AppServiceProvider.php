@@ -27,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Contracts\ClassificationRepositoryInterface',
             'App\Repositories\Eloquent\ClassificationRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Contracts\ResultRepositoryInterface',
+            'App\Repositories\Eloquent\ResultRepository'
+        );
     }
 
     /**

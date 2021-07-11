@@ -3,14 +3,20 @@
 This is a API for register runners in race proofs.
 
 You can:
-    - store runners,
-    - store races, 
-    - subscribe runners in races,
-    - register proof results,
-    - list a general overview from results and
-    - list results with groups by age ranges.
 
-A PHP Laravel 8 API, with Repository Pattern, Service Pattern and very best pratices on coding.
+- store runners,
+
+- store races, 
+
+- subscribe runners in races,
+
+- register proof results,
+
+- list a general overview from results and
+
+- list results grouped by age ranges.
+
+A PHP Laravel 8 API, with Repository Pattern, Service Pattern and very best practices on coding, including several Laravel resources used.
 
 This first version doesn't have a token or any security plugin, my intention is aplly Passport to keep security.
 
@@ -26,6 +32,7 @@ Here are the technologies used in this project.
 * Laravel 8
 * MySql 8
 * Docker (With Laravel Sail)
+* PHP 8
 
 ## Getting started
 

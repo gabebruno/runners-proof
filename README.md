@@ -1,62 +1,286 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Runners Proof - API REST
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a API for register runners in race proofs.
 
-## About Laravel
+You can:
+    - store runners,
+    - store races, 
+    - subscribe runners in races,
+    - register proof results,
+    - list a general overview from results and
+    - list results with groups by age ranges.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A PHP Laravel 8 API, with Repository Pattern, Service Pattern and very best pratices on coding.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This first version doesn't have a token or any security plugin, my intention is aplly Passport to keep security.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+So, this is it...
 
-## Learning Laravel
+Thanks people!!!
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Technology
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Here are the technologies used in this project.
 
-## Laravel Sponsors
+* Composer (For dependencies)
+* Laravel 8
+* MySql 8
+* Docker (With Laravel Sail)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Getting started
 
-### Premium Partners
+* First you need clone this repository!
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+* To install dependencies:
+>   $ composer install
 
-## Contributing
+* .Env configuration:
+>   Rename .env.example to .env.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* Run the project with docker:
+>   $ docker-compose up -d
 
-## Code of Conduct
+* Database Configuration (after Run Docker)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+In linux terminal you can run:
+>   $ docker exec -it runnersproof_mysql_1 /bin/bash
+> 
+>   $ mysql -u sail -p {password}
+> 
+>   $ create database runnersproof;
+>
+>   And its all for now. 
 
-## Security Vulnerabilities
+* Run Migrations (Will migrate without errors if the database was created previously)
+>   $ php artisan migrate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* Or... to consume this API just use the following heroku link with the routes defined bellow:
+>   https://usercontrolgabebruno.herokuapp.com/
 
-## License
+## How to use
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**The routes defined are:**
+
+    [POST]: /api/runners      - Receive multilevel JSON like example:
+    Rule: Runners don't be minor age and CPF is unique.
+
+    Example:
+    [
+        {
+            "name":         Required    | String,
+            "cpf":          Required    | String   | CPF validation,
+            "birthday":     Required    | Date     | Format (YYYY-mm-dd) 
+        }
+        {
+            ...
+        }
+        ...
+    ]
+**  **
+
+    [POST]: /api/races        - Receive multilevel JSON like example:
+    Rule:   - Don't has any validation here.
+
+    Example:
+    [
+        {
+            "type":         Required    |  Numeric
+            "date":         Required    |  Date    | Format (YYYY-mm-dd)
+        },
+        {
+         ...
+        }
+        ...
+    ]
+**  **
+
+    [POST]: /api/races/subscribe      - Receive multilevel JSON like example:
+    Rule:   - Runners and races demands previously registration.
+            - Runners can't be subscribed in two races at same day.
+            - Runners can't be subscribed two times in same race.
+    Example:
+    [
+        {
+            "runner_id":            Required    | Numeric   | Exist on Runners
+            "race_id":              Required    | Numeric   | Exist on Races
+        },
+        {
+            ...
+        }
+        ...
+    ]
+**  **
+
+    [PUT]: /api/results/          - Receive multilevel JSON like example:
+    Rules:  - Finish time needs be greater then begins.
+            - Runner and race demands previously attachment, this is a UPDATE.
+    Example:
+    [
+        {
+            "runner_id":        Required    | Numeric   | Exist on Runners
+            "race_id":          Required    | Numeric   | Exist on Races
+            "begin":            Required    | String    | Format(HH:mm:ss)
+            "finish":           Required    | String    | Format(HH:mm:ss)
+        },
+        {
+            ...
+        }
+            ...
+    ]
+**  **
+
+    [GET]: /api/results     - "Deliver IT" two possible JSON responses, according query parameters.
+    Query parameter:        - byAge : true, false or just no mentioned (false default).
+    All data in this example is fake, generate with JSON faker.
+    
+    FIRST EXAMPLE: Return from request without byAge parameter or false:
+    Explanation:   This feature returns a general result formatted in JSON grouped by race type.
+    {
+    "data": {
+        "3Km": [
+            {
+                "race_id": 1,
+                "runner": [
+                    [
+                        {
+                            "runner_id": 20,
+                            "name": "Ana Ester Silvana Barros",
+                            "age": 64,
+                            "position": "1st",
+                            "total_time": "00:02:00"
+                        },
+                        {
+                            "runner_id": 9,
+                            "name": "Alexandre Luís Gomes",
+                            "age": 77,
+                            "position": "2st",
+                            "total_time": "00:09:38"
+                        }
+                    ]
+                ]
+            },
+            {
+                "race_id": 3,
+                "runner": [
+                    [
+                        {
+                            "runner_id": 7,
+                            "name": "Ayla Mariana Luciana Vieira",
+                            "age": 39,
+                            "position": "1st",
+                            "total_time": "00:07:00"
+                        },
+                        {
+                            "runner_id": 9,
+                            "name": "Alexandre Luís Gomes",
+                            "age": 77,
+                            "position": "2st",
+                            "total_time": "00:09:34"
+                        }
+                    ]
+                ]
+            }
+        ],
+        "20Km": [
+            {
+                "race_id": 6,
+                "runner": [
+                    [
+                        {
+                            "runner_id": 1,
+                            "name": "Cláudia Clarice Benedita Campos",
+                            "age": 18,
+                            "position": "1st",
+                            "total_time": "00:01:38"
+                        }
+                    ]
+                ]
+            }
+        ]
+    }
+
+    SECOND EXAMPLE: Return from request with byAge true parameter:
+    Explanation:    This feature returns formatted JSON with age-classified runners
+                    and your positions on range.
+    {
+        "data": [
+            {
+                "race_id": 3,
+                "race_type": "3 Km",
+                "age_range": {
+                    "18 – 25 years": [],
+                    "36 – 45 years": [
+                        {
+                            "race_id": 3,
+                            "race_type": "3 Km",
+                            "runner_id": 7,
+                            "name": "Ayla Mariana Luciana Vieira",
+                            "runner_age": 39,
+                            "total_time": "00:07:00",
+                            "age_range": "36 – 45 years",
+                            "position": "1st"
+                        }
+                    ],
+                    "46 – 55 years": [
+                        {
+                            "race_id": 3,
+                            "race_type": "3 Km",
+                            "runner_id": 14,
+                            "name": "Miguel Heitor Campos",
+                            "runner_age": 51,
+                            "total_time": "00:14:14",
+                            "age_range": "46 – 55 years",
+                            "position": "1st"
+                        }
+                    ],
+                    "55 years up": [
+                        {
+                            "race_id": 3,
+                            "race_type": "3 Km",
+                            "runner_id": 9,
+                            "name": "Alexandre Luís Gomes",
+                            "runner_age": 77,
+                            "total_time": "00:09:34",
+                            "age_range": "55 years up",
+                            "position": "1st"
+                        },
+                        {
+                            "race_id": 3,
+                            "race_type": "3 Km",
+                            "runner_id": 18,
+                            "name": "Alexandre Giovanni Baptista",
+                            "runner_age": 63,
+                            "total_time": "00:18:38",
+                            "age_range": "55 years up",
+                            "position": "2st"
+                        },
+                        {
+                            "race_id": 3,
+                            "race_type": "3 Km",
+                            "runner_id": 20,
+                            "name": "Ana Ester Silvana Barros",
+                            "runner_age": 64,
+                            "total_time": "00:20:35",
+                            "age_range": "55 years up",
+                            "position": "3st"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+
+
+## Versioning
+
+1.0.0.0
+
+
+## Author
+
+* **Gabriel Bruno Almeida**:
+  
+    * @GitHub (bit.ly/myGitHubRepos)
+    
+    * @LinkedIn (bit.ly/myResumeLinkedIn)
+

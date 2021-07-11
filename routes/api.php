@@ -25,7 +25,6 @@ Route::post('races/subscribe', [RaceController::class, 'subscribe'])->name('race
 Route::put('results', [ClassificationController::class, 'registerResults'])->name('classifications.register');
 
 // Route GET supports the folowing query parameters:
-// byAge: accepts TRUE or FALSE, any other value will be FALSE for validations;
-// perPage: to choose the number of results per page - INTEGER. Default is 25;
+// byAge: accepts TRUE or FALSE, any other value will be FALSE for validations and returns general results;
 Route::get('results', [ResultController::class, 'getClassifications'])->name('classifications.get');
 

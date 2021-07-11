@@ -79,32 +79,11 @@ class ResultService
     }
 
     /**
-     * Mapping runners by race
+     * Used to map age ranges from users
      *
      * @param $rawListRunners
-     * @param $rawListRaces
      *
      * @return array
-     */
-    private function mapRunnersByRacesWithAgeRange($ListRunners, $ListRaces, $ranges): array
-    {
-        $ordenedRaceList = [];
-
-        foreach($ListRaces as $race) {
-                $ordenedRaceList[] = [
-                    'raceId' => $race->id,
-                    'raceType' => $race->type.' Km',
-                    'age_range' => $this->mapRunnersWithRanges($ListRunners, $race->id, $ranges)
-                ];
-        }
-
-        return $ordenedRaceList;
-    }
-
-    /**
-     * Used to map age range from users
-     *
-     * @param $rawListRunners
      */
     public function mapAgeRanges($rawListRunners): array
     {
@@ -118,16 +97,41 @@ class ResultService
     }
 
     /**
+     * Mapping runners by race
+     *
+     * @param $ListRunners
+     * @param $ListRaces
+     * @param $ranges
+     *
+     * @return array
+     */
+    private function mapRunnersByRacesWithAgeRange($ListRunners, $ListRaces, $ranges): array
+    {
+        $ordenedRaceList = [];
+
+        foreach($ListRaces as $race) {
+            $ordenedRaceList[] = [
+                'raceId' => $race->id,
+                'raceType' => $race->type.' Km',
+                'age_range' => $this->mapRunnersWithAgeRanges($ListRunners, $race->id, $ranges)
+            ];
+        }
+
+        return $ordenedRaceList;
+    }
+
+    /**
      * Catch all runners on a specific race
      *
      * Using a raw list of runners and race id, this method catch just runners attached to a race.
      *
      * @param $rawListRunners
      * @param $raceId
+     * @param $ranges
      *
      * @return array
      */
-    private function mapRunnersWithRanges($rawListRunners, $raceId, $ranges): array
+    private function mapRunnersWithAgeRanges($rawListRunners, $raceId, $ranges): array
     {
         $runnersByRange = [];
         foreach ($ranges as $range) {
@@ -145,7 +149,7 @@ class ResultService
                     ];
                 }
             }
-         $runnersByRange[$range] = $this->makeRankingInRunnersByAge($runner);
+            $runnersByRange[$range] = $this->makeRankingInRunnersByAge($runner);
         }
         return $runnersByRange;
     }
@@ -185,30 +189,16 @@ class ResultService
      */
     public function makeRankingInRunners($resultList)
     {
-
-        dd($resultList);
-        $resultRanked = [];
-
-        foreach($resultList as $race) {
-            $position = 1;
-            $resultRankedByRace = [];
-
-            foreach($race['runner'] as $runners) {
-                $runners = Arr::sort($runners, 'total_time');
-
-                foreach($runners as $runner) {
-                    $runner['position'] = $position++;
-                    $runners[] = $runner;
-                }
-
-                $resultRankedByRace[] = $runners;
-            }
-
-        $resultRanked[] = $resultRankedByRace;
-        }
         return $resultList;
     }
 
+    /**
+     * Map runners by Race Type > Race
+     *
+     * @param $results
+     *
+     * @return array
+     */
     private function mapRunnersByRacesType($results): array
     {
         $runnersByRace = [];
@@ -224,21 +214,50 @@ class ResultService
         return $runnersByRace;
     }
 
+    /**
+     * Get Runner by Race
+     *
+     * @param $results
+     * @param $raceId
+     *
+     * @return array
+     */
     private function getRunnersByRace($results, $raceId): array
     {
         $runnersByRace = [];
+        $position = 1;
         foreach ($results as $runner) {
-            if($runner->race_id === $raceId ) {
+            $lastRunnerTotalTime = $runner->total_time;
+            if($runner->race_id === $raceId) {
                 $data = [
                     'runner_id' => $runner->id,
                     'name' => $runner->name,
                     'age' => $runner->runner_age,
                     'total_time' => $runner->total_time,
-                    'position' => '',
                 ];
                 $runnersByRace[] = $data;
             }
         }
+        $runnersByRace = $this->orderRunnersAndRanking($runnersByRace);
+
         return $runnersByRace;
+    }
+
+    private function orderRunnersAndRanking($runnersByRace)
+    {
+        $ordenedList = Arr::sort($runnersByRace, 'total_time');
+        $ordenedAndRankedList = [];
+        $position = 1;
+        foreach ($ordenedList as $runner) {
+            $data = [
+                'runner_id' => $runner['runner_id'],
+                'name' => $runner['name'],
+                'age' => $runner['age'],
+                'position' => $position++.'st',
+                'total_time' => $runner['total_time']
+            ];
+            $ordenedAndRankedList[] = $data;
+        }
+        return $ordenedAndRankedList;
     }
 }

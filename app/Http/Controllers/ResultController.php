@@ -17,6 +17,11 @@ class ResultController extends Controller
         $this->service = $service;
     }
 
+    /**
+     * Get classification list
+     *
+     * @return AnonymousResourceCollection
+     */
     public function getClassifications(): AnonymousResourceCollection
     {
         return $this->service->getClassifications();

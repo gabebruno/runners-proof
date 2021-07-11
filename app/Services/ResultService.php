@@ -73,7 +73,6 @@ class ResultService
     {
         $results = $this->resultRepo->getGeneralClassification();
         $results = $this->mapRunnersByRacesType($results);
-        $results = $this->makeRankingInRunners($results);
 
         return $results;
     }
@@ -163,7 +162,7 @@ class ResultService
      *
      * @return array
      */
-    public function makeRankingInRunnersByAge($runnersList)
+    public function makeRankingInRunnersByAge($runnersList): array
     {
         $runnersList = Arr::sort($runnersList, 'total_time');
 
@@ -176,20 +175,6 @@ class ResultService
             $runnersByRange[] = $runner;
         }
         return $runnersByRange;
-    }
-
-    /**
-     * Map runners to make ranking and show positions
-     *
-     * Used to make ranking in general clssifications
-     *
-     * @param $runnersList
-     *
-     * @return array
-     */
-    public function makeRankingInRunners($resultList)
-    {
-        return $resultList;
     }
 
     /**
@@ -243,6 +228,13 @@ class ResultService
         return $runnersByRace;
     }
 
+    /**
+     * Order Runners and define ranking position
+     *
+     * @param $runnersByRace
+     *
+     * @return array
+     */
     private function orderRunnersAndRanking($runnersByRace)
     {
         $ordenedList = Arr::sort($runnersByRace, 'total_time');

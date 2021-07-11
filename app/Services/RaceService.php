@@ -20,6 +20,8 @@ class RaceService
     }
 
     /**
+     * Store a resource in database
+     *
      * @param StoreRaceRequest $request
      *
      * @return JsonResponse
@@ -39,6 +41,8 @@ class RaceService
     }
 
     /**
+     * Method for subscribe runners in races
+     *
      * @param SubscribeRunnerRequest $request
      *
      * @return JsonResponse

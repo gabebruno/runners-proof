@@ -9,6 +9,8 @@ use Carbon\Carbon;
 class AgeHelper
 {
     /**
+     * Method for calculate Age from Date of Birth
+     *
      * @param $dateOfBirth
      * @return int
      */
@@ -18,6 +20,8 @@ class AgeHelper
     }
 
     /**
+     * Method for validate if target is in legal age.
+     *
      * @param $dateOfBirth
      * @return bool
      */

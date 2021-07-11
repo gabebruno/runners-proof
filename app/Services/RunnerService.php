@@ -3,10 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\StoreRunnerRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
 use App\Repositories\Contracts\RunnerRepositoryInterface;
-use Illuminate\Validation\ValidationException;
 
 class RunnerService
 {
@@ -21,6 +18,8 @@ class RunnerService
     }
 
     /**
+     * Store a resource in database
+     *
      * @param StoreRunnerRequest $request
      *
      * @return array

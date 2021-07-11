@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\ClassificationService;
 use App\Http\Requests\StoreClassificationRequest;

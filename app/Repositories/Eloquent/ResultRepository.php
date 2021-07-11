@@ -77,9 +77,4 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
 
         return $query;
     }
-
-    public function getRacesList()
-    {
-        return $this->model->distinct('type')->get();
-    }
 }

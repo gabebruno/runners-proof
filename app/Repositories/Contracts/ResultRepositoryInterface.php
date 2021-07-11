@@ -28,6 +28,4 @@ interface ResultRepositoryInterface
      * @return mixed
      */
     public function getWithOrderBy(string $order);
-
-    public function getRacesList();
 }

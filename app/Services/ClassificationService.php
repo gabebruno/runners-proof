@@ -8,7 +8,6 @@ use App\Helpers\AgeHelper;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StoreClassificationRequest;
 use App\Repositories\Contracts\RunnerRepositoryInterface;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Repositories\Contracts\ClassificationRepositoryInterface;
 
 class ClassificationService
@@ -74,18 +73,20 @@ class ClassificationService
         return $this->runnerRepo->find($id);
     }
 
+    /**
+     * Calculate total proof time from a runner
+     *
+     * Using begin and finish time, total time is calculate to define ranking.
+     *
+     * @param $begin
+     * @param $finish
+     *
+     * @return string
+     */
     private function calculateTotalTime($begin, $finish): string
     {
         return Carbon::parse($begin)
             ->diff(Carbon::parse($finish))
             ->format('%H:%I:%S');
-    }
-
-    public function getClassifications(): AnonymousResourceCollection
-    {
-        $byAge = strtolower(request('byAge')) == 'true';
-        $perPage = request('perPage') ? intval(request('perPage')) : 15;
-
-        return $this->repo->getClassifications($perPage, $byAge);
     }
 }

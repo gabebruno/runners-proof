@@ -6,7 +6,6 @@ use App\Services\RaceService;
 use App\Http\Requests\StoreRaceRequest;
 use App\Http\Requests\SubscribeRunnerRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class RaceController extends Controller
 {
@@ -21,16 +20,19 @@ class RaceController extends Controller
     }
 
     /**
+     * Store resource in database
+     *
      * @param StoreRaceRequest $request
      * @return JsonResponse
      */
     public function store(StoreRaceRequest $request): JsonResponse
     {
         return $this->service->store($request);
-
     }
 
     /**
+     * Subscribe runners in races
+     *
      * @param SubscribeRunnerRequest $request
      * @return JsonResponse
      */

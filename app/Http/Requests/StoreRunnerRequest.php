@@ -60,8 +60,8 @@ class StoreRunnerRequest extends FormRequest
     {
         $runners = parent::all();
 
-        foreach ($runners as $runner) {
-            $runner['cpf'] = preg_replace('/\D/', '', $runner['cpf']);
+        foreach ($runners as $single) {
+            $single['cpf'] = preg_replace('/\D/', '', $single['cpf']);
         }
         parent::replace($runners);
         return parent::all();

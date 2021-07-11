@@ -18,6 +18,10 @@ You can:
 
 A PHP Laravel 8 API, with Repository Pattern, Service Pattern and very best practices on coding, including several Laravel resources used.
 
+Has some tests applyed, just for show the fucionality, with PHP Unit.
+
+Was covered all routes in "Happy way" and some validation errors.
+
 This first version doesn't have a token or any security plugin, my intention is aplly Passport to keep security.
 
 So, this is it...
@@ -33,6 +37,7 @@ Here are the technologies used in this project.
 * MySql 8
 * Docker (With Laravel Sail)
 * PHP 8
+* PHP Unit
 
 ## Getting started
 
@@ -61,8 +66,7 @@ In linux terminal you can run:
 * Run Migrations (Will migrate without errors if the database was created previously)
 >   $ php artisan migrate
 
-* Or... to consume this API just use the following heroku link with the routes defined bellow:
->   https://usercontrolgabebruno.herokuapp.com/
+
 
 ## How to use
 

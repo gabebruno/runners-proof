@@ -47,6 +47,7 @@ Here are the technologies used in this project.
 >   $ php composer.phar install
 
 * .Env configuration:
+
 Rename .env.example to .env.
 
 * Run docker container up:

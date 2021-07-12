@@ -41,10 +41,10 @@ Here are the technologies used in this project.
 
 ## Getting started
 
-* First you need clone this repository!
+* First you need clone this repository! (Don't change folder's name)
 
 * To install dependencies:
->   $ composer install
+>   $ php composer.phar install
 
 * .Env configuration:
 >   Rename .env.example to .env.
@@ -56,18 +56,14 @@ Here are the technologies used in this project.
 
 * Database Configuration (after Run Docker)
 
-In linux terminal you can run:
->   $ docker exec -it runnersproof_mysql_1 /bin/bash
+In linux terminal you can run php artisan command from docker container:
+>   $ docker exec -it runnersproof_laravel.test_1 /bin/bash
 > 
->   $ mysql -u sail -p {password}
-> 
->   $ create database runnersproof;
->
->   And its all for now. 
-
-* Run Migrations (Will migrate without errors if the database was created previously)
 >   $ php artisan migrate
+>
 
+* And its all for now. 
+** **
 
 
 ## How to use

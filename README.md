@@ -49,12 +49,12 @@ Here are the technologies used in this project.
 * .Env configuration:
 >   Rename .env.example to .env.
 
-* Run the project with docker:
+* Run docker container up:
 >   $ docker-compose up -d
 * Ou utilizando o sail
 >   ./vendor/bin/sail up
 
-* Database Configuration (after Run Docker)
+* Run ARTISAN commands to migrate
 
 In linux terminal you can run php artisan command from docker container:
 >   $ docker exec -it runnersproof_laravel.test_1 /bin/bash

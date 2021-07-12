@@ -47,12 +47,12 @@ Here are the technologies used in this project.
 >   $ php composer.phar install
 
 * .Env configuration:
->   Rename .env.example to .env.
+Rename .env.example to .env.
 
 * Run docker container up:
 >   $ docker-compose up -d
 * Ou utilizando o sail
->   ./vendor/bin/sail up
+>   $ ./vendor/bin/sail up
 
 * Run ARTISAN commands to migrate
 

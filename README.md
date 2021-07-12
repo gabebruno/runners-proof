@@ -61,7 +61,13 @@ In linux terminal you can run php artisan command from docker container:
 >   $ docker exec -it runnersproof_laravel.test_1 /bin/bash
 > 
 >   $ php artisan migrate
->
+
+
+* If show database errors because it's not created, run this:
+>  $ docker exec -it runnersproof_mysql_1 /bin/bash
+>  $ mysql -p sail -u && password
+>  $ create database runnersproof;
+>  $ exit
 
 * And its all for now. 
 ** **

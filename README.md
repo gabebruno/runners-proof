@@ -51,6 +51,8 @@ Here are the technologies used in this project.
 
 * Run the project with docker:
 >   $ docker-compose up -d
+* Ou utilizando o sail
+>   ./vendor/bin/sail up
 
 * Database Configuration (after Run Docker)
 

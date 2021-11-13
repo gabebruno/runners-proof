@@ -65,8 +65,11 @@ In linux terminal you can run php artisan command from docker container:
 
 * If show database errors because it's not created, run this:
 >  $ docker exec -it runnersproof_mysql_1 /bin/bash
+>  
 >  $ mysql -p sail -u && password
+>  
 >  $ create database runnersproof;
+>  
 >  $ exit
 
 * And its all for now. 
@@ -296,7 +299,7 @@ In linux terminal you can run php artisan command from docker container:
 
 * **Gabriel Bruno Almeida**:
   
-    * @GitHub (bit.ly/myGitHubRepos)
+    * @GitHub (https://github.com/gabebruno)
     
-    * @LinkedIn (bit.ly/myResumeLinkedIn)
+    * @LinkedIn (https://www.linkedin.com/in/dev-gabriel-bruno/)
 

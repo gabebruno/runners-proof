@@ -299,7 +299,7 @@ In linux terminal you can run php artisan command from docker container:
 
 * **Gabriel Bruno Almeida**:
   
-    * @[GitHub] (https://github.com/gabebruno)
+    * [GitHub](https://github.com/gabebruno)
     
-    * @[LinkedIn] (https://www.linkedin.com/in/dev-gabriel-bruno/)
+    * [LinkedIn](https://www.linkedin.com/in/dev-gabriel-bruno/)
 
